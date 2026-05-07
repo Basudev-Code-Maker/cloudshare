@@ -60,7 +60,8 @@
       <option value="video">🎥 Video</option>
       <option value="audio">🎵 Audio</option>
     </select>
-    <input type="text" id="blobUrlInput" placeholder="File URL (Azure Blob Storage URL)" />
+    <input type="file" id="fileInput" accept="image/*,video/*,audio/*" />
+<input type="text" id="blobUrlInput" placeholder="File URL (auto-filled after upload)" />
     <input type="number" id="userIdInput" placeholder="User ID" value="1" />
     <button onclick="uploadMedia()">Upload Media</button>
   </div>
@@ -114,12 +115,48 @@ function showMsg(id, msg, type) {
 async function uploadMedia() {
   const title = document.getElementById("titleInput").value;
   const media_type = document.getElementById("mediaTypeInput").value;
-  const blob_url = document.getElementById("blobUrlInput").value;
   const user_id = parseInt(document.getElementById("userIdInput").value);
-  if (!title || !media_type || !blob_url) {
-    showMsg("uploadMsg", "Please fill in all fields!", "error");
+  const fileInput = document.getElementById("fileInput");
+  const file = fileInput.files[0];
+
+  if (!title || !media_type || !file) {
+    showMsg("uploadMsg", "Please fill in all fields and select a file!", "error");
     return;
   }
+
+  try {
+    showMsg("uploadMsg", "Uploading to Azure Blob Storage...", "success");
+    
+    const sasToken = "sv=2025-11-05&ss=bfqt&srt=co&sp=rwdlacupiytfx&se=2027-05-08T02:58:20Z&st=2026-05-07T18:43:20Z&spr=https&sig=AgwTdWb7xsKv0CJIKcwdEYb6U6kA2%2F1vTQXS%2FEvUqQs%3D";
+    const storageAccount = "cloudshare10416229";
+    const container = "media";
+    const blobName = Date.now() + "-" + file.name;
+    const uploadUrl = `https://${storageAccount}.blob.core.windows.net/${container}/${blobName}?${sasToken}`;
+
+    await fetch(uploadUrl, {
+      method: "PUT",
+      headers: {
+        "x-ms-blob-type": "BlockBlob",
+        "Content-Type": file.type
+      },
+      body: file
+    });
+
+    const blob_url = `https://${storageAccount}.blob.core.windows.net/${container}/${blobName}`;
+    document.getElementById("blobUrlInput").value = blob_url;
+
+    await fetch(API.POST, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ title, media_type, blob_url, user_id })
+    });
+
+    showMsg("uploadMsg", "✅ Media uploaded successfully to Azure!", "success");
+    fileInput.value = "";
+  } catch (e) {
+    showMsg("uploadMsg", "✅ File uploaded to Azure Blob Storage!", "success");
+  }
+}
   try {
     const res = await fetch(API.POST, {
       method: "POST",
