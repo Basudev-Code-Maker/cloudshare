@@ -1,4 +1,4 @@
-name: Deploy to Azure
+name: Deploy CloudShare to Azure
 
 on:
   push:
@@ -6,13 +6,13 @@ on:
       - main
 
 jobs:
-  build-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
-    
+    - uses: actions/checkout@v4
+
     - name: Deploy to Azure Web App
-      uses: azure/webapps-deploy@v2
+      uses: azure/webapps-deploy@v3
       with:
         app-name: 'cloudshare-10416229'
         publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
