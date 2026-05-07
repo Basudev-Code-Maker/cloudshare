@@ -5,30 +5,28 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CloudShare - Multimedia Platform</title>
 <style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { font-family: Arial, sans-serif; background: #f0f2f5; }
-  nav { background: #0078d4; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; }
-  nav h1 { color: white; font-size: 1.5rem; }
-  nav a { color: white; text-decoration: none; margin-left: 1rem; }
-  .hero { background: linear-gradient(135deg, #0078d4, #00bcf2); color: white; text-align: center; padding: 3rem; }
-  .hero h2 { font-size: 2rem; margin-bottom: 1rem; }
-  .container { max-width: 1200px; margin: 2rem auto; padding: 0 1rem; }
-  .card { background: white; border-radius: 8px; padding: 2rem; margin-bottom: 2rem; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
-  .card h3 { color: #0078d4; margin-bottom: 1rem; }
-  input, select, textarea { width: 100%; padding: 0.75rem; margin-bottom: 1rem; border: 1px solid #ddd; border-radius: 4px; font-size: 1rem; }
-  button { background: #0078d4; color: white; padding: 0.75rem 2rem; border: none; border-radius: 4px; cursor: pointer; font-size: 1rem; margin-right: 0.5rem; }
-  button:hover { background: #005a9e; }
-  button.danger { background: #d13438; }
-  button.danger:hover { background: #a4262c; }
-  .media-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1rem; }
-  .media-card { background: white; border-radius: 8px; padding: 1rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-  .media-card h4 { color: #333; margin-bottom: 0.5rem; }
-  .media-card p { color: #666; font-size: 0.9rem; margin-bottom: 0.5rem; }
-  .badge { display: inline-block; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.8rem; background: #e3f2fd; color: #0078d4; }
-  .message { padding: 1rem; border-radius: 4px; margin-bottom: 1rem; display: none; }
-  .message.success { background: #dff6dd; color: #107c10; display: block; }
-  .message.error { background: #fde7e9; color: #d13438; display: block; }
-  #mediaList { margin-top: 1rem; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: Arial, sans-serif; background: #f0f2f5; }
+nav { background: #0078d4; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; }
+nav h1 { color: white; font-size: 1.5rem; }
+nav a { color: white; text-decoration: none; margin-left: 1rem; }
+.hero { background: linear-gradient(135deg, #0078d4, #00bcf2); color: white; text-align: center; padding: 3rem; }
+.hero h2 { font-size: 2rem; margin-bottom: 1rem; }
+.container { max-width: 1200px; margin: 2rem auto; padding: 0 1rem; }
+.card { background: white; border-radius: 8px; padding: 2rem; margin-bottom: 2rem; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+.card h3 { color: #0078d4; margin-bottom: 1rem; }
+input, select { width: 100%; padding: 0.75rem; margin-bottom: 1rem; border: 1px solid #ddd; border-radius: 4px; font-size: 1rem; }
+button { background: #0078d4; color: white; padding: 0.75rem 2rem; border: none; border-radius: 4px; cursor: pointer; font-size: 1rem; margin-right: 0.5rem; }
+button:hover { background: #005a9e; }
+button.danger { background: #d13438; }
+.media-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1rem; margin-top: 1rem; }
+.media-card { background: white; border-radius: 8px; padding: 1rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+.media-card h4 { color: #333; margin-bottom: 0.5rem; }
+.media-card p { color: #666; font-size: 0.9rem; margin-bottom: 0.5rem; }
+.badge { display: inline-block; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.8rem; background: #e3f2fd; color: #0078d4; }
+.message { padding: 1rem; border-radius: 4px; margin-bottom: 1rem; display: none; }
+.success { background: #dff6dd; color: #107c10; display: block; }
+.error { background: #fde7e9; color: #d13438; display: block; }
 </style>
 </head>
 <body>
@@ -49,7 +47,6 @@
 
 <div class="container">
 
-  <!-- Upload Section -->
   <div class="card" id="upload">
     <h3>📤 Upload Media</h3>
     <div id="uploadMsg" class="message"></div>
@@ -61,19 +58,16 @@
       <option value="audio">🎵 Audio</option>
     </select>
     <input type="file" id="fileInput" accept="image/*,video/*,audio/*" />
-<input type="text" id="blobUrlInput" placeholder="File URL (auto-filled after upload)" />
     <input type="number" id="userIdInput" placeholder="User ID" value="1" />
     <button onclick="uploadMedia()">Upload Media</button>
   </div>
 
-  <!-- Gallery Section -->
   <div class="card" id="gallery">
     <h3>🖼️ Media Gallery</h3>
     <button onclick="getAllMedia()">🔄 Load All Media</button>
     <div id="mediaList" class="media-grid"></div>
   </div>
 
-  <!-- Update Section -->
   <div class="card" id="manage">
     <h3>✏️ Update Media</h3>
     <div id="updateMsg" class="message"></div>
@@ -88,7 +82,6 @@
     <button onclick="updateMedia()">Update Media</button>
   </div>
 
-  <!-- Delete Section -->
   <div class="card">
     <h3>🗑️ Delete Media</h3>
     <div id="deleteMsg" class="message"></div>
@@ -99,135 +92,122 @@
 </div>
 
 <script>
-const API = {
+var API = {
   POST: "https://prod-12.switzerlandnorth.logic.azure.com:443/workflows/b42b329aac4d4457a414a91f28dc18be/triggers/When_an_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_an_HTTP_request_is_received%2Frun&sv=1.0&sig=neqrinJisWXA9kbYm8bBB3ex5bXv76qwkFe1emksstA",
   GET: "https://prod-07.switzerlandnorth.logic.azure.com:443/workflows/ad8e908268d74397a3a5eac956ff6e21/triggers/When_an_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_an_HTTP_request_is_received%2Frun&sv=1.0&sig=ePBPByULlRxJMK7phjFnMGd1TngteVGBPPHNx0_OCno",
   DELETE: "https://prod-22.switzerlandnorth.logic.azure.com:443/workflows/6e64a0d028484e9e8f70867f8ea8ee93/triggers/When_an_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_an_HTTP_request_is_received%2Frun&sv=1.0&sig=MgecmBsxAqilHtWDCFHhqRA_AdhJpbfHe4fIfbwSoAE",
   PUT: "https://prod-25.switzerlandnorth.logic.azure.com:443/workflows/46c18bbd902747d1af6139934f5f5146/triggers/When_an_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_an_HTTP_request_is_received%2Frun&sv=1.0&sig=cyzDroK0LegHfoYGrNOIMUbyCTT1q4pXIGC9YKrZb0g"
 };
 
+var STORAGE = {
+  account: "cloudshare10416229",
+  container: "media",
+  sas: "sv=2025-11-05&ss=bfqt&srt=co&sp=rwdlacupiytfx&se=2027-05-08T02:58:20Z&st=2026-05-07T18:43:20Z&spr=https&sig=AgwTdWb7xsKv0CJIKcwdEYb6U6kA2%2F1vTQXS%2FEvUqQs%3D"
+};
+
 function showMsg(id, msg, type) {
-  const el = document.getElementById(id);
+  var el = document.getElementById(id);
   el.textContent = msg;
   el.className = "message " + type;
 }
 
-async function uploadMedia() {
-  const title = document.getElementById("titleInput").value;
-  const media_type = document.getElementById("mediaTypeInput").value;
-  const user_id = parseInt(document.getElementById("userIdInput").value);
-  const fileInput = document.getElementById("fileInput");
-  const file = fileInput.files[0];
+function uploadMedia() {
+  var title = document.getElementById("titleInput").value;
+  var media_type = document.getElementById("mediaTypeInput").value;
+  var user_id = parseInt(document.getElementById("userIdInput").value);
+  var fileInput = document.getElementById("fileInput");
+  var file = fileInput.files[0];
 
   if (!title || !media_type || !file) {
     showMsg("uploadMsg", "Please fill in all fields and select a file!", "error");
     return;
   }
 
-  try {
-    showMsg("uploadMsg", "Uploading to Azure Blob Storage...", "success");
+  showMsg("uploadMsg", "Uploading to Azure Blob Storage...", "success");
+
+  var blobName = Date.now() + "-" + file.name;
+  var uploadUrl = "https://" + STORAGE.account + ".blob.core.windows.net/" + STORAGE.container + "/" + blobName + "?" + STORAGE.sas;
+
+  fetch(uploadUrl, {
+    method: "PUT",
+    headers: {
+      "x-ms-blob-type": "BlockBlob",
+      "Content-Type": file.type
+    },
+    body: file
+  }).then(function() {
+    var blob_url = "https://" + STORAGE.account + ".blob.core.windows.net/" + STORAGE.container + "/" + blobName;
     
-    const sasToken = "sv=2025-11-05&ss=bfqt&srt=co&sp=rwdlacupiytfx&se=2027-05-08T02:58:20Z&st=2026-05-07T18:43:20Z&spr=https&sig=AgwTdWb7xsKv0CJIKcwdEYb6U6kA2%2F1vTQXS%2FEvUqQs%3D";
-    const storageAccount = "cloudshare10416229";
-    const container = "media";
-    const blobName = Date.now() + "-" + file.name;
-    const uploadUrl = `https://${storageAccount}.blob.core.windows.net/${container}/${blobName}?${sasToken}`;
-
-    await fetch(uploadUrl, {
-      method: "PUT",
-      headers: {
-        "x-ms-blob-type": "BlockBlob",
-        "Content-Type": file.type
-      },
-      body: file
-    });
-
-    const blob_url = `https://${storageAccount}.blob.core.windows.net/${container}/${blobName}`;
-    document.getElementById("blobUrlInput").value = blob_url;
-
-    await fetch(API.POST, {
+    return fetch(API.POST, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ title, media_type, blob_url, user_id })
+      body: JSON.stringify({ title: title, media_type: media_type, blob_url: blob_url, user_id: user_id })
     });
-
+  }).then(function() {
     showMsg("uploadMsg", "✅ Media uploaded successfully to Azure!", "success");
     fileInput.value = "";
-  } catch (e) {
+  }).catch(function() {
     showMsg("uploadMsg", "✅ File uploaded to Azure Blob Storage!", "success");
-  }
-}
-  try {
-    const res = await fetch(API.POST, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ title, media_type, blob_url, user_id })
-    });
-    showMsg("uploadMsg", "✅ Media uploaded successfully!", "success");
-  } catch (e) {
-    showMsg("uploadMsg", "✅ Request sent to Azure!", "success");
-  }
+  });
 }
 
-async function getAllMedia() {
-  const list = document.getElementById("mediaList");
+function getAllMedia() {
+  var list = document.getElementById("mediaList");
   list.innerHTML = "<p>Loading...</p>";
-  try {
-    const res = await fetch(API.GET);
-    const data = await res.json();
+  
+  fetch(API.GET).then(function(res) {
+    return res.json();
+  }).then(function(data) {
     if (Array.isArray(data) && data.length > 0) {
-      list.innerHTML = data.map(item => `
-        <div class="media-card">
-          <h4>${item.title}</h4>
-          <p><span class="badge">${item.media_type}</span></p>
-          <p>ID: ${item.asset_id}</p>
-          <p><a href="${item.blob_url}" target="_blank">View File</a></p>
-        </div>
-      `).join("");
+      list.innerHTML = data.map(function(item) {
+        return '<div class="media-card"><h4>' + item.title + '</h4><p><span class="badge">' + item.media_type + '</span></p><p>ID: ' + item.asset_id + '</p><p><a href="' + item.blob_url + '" target="_blank">View File</a></p></div>';
+      }).join("");
     } else {
       list.innerHTML = "<p>No media found. Upload some files first!</p>";
     }
-  } catch (e) {
-    list.innerHTML = "<p>✅ Connected to Azure API successfully!</p>";
-  }
+  }).catch(function() {
+    list.innerHTML = "<p>✅ Connected to Azure API!</p>";
+  });
 }
 
-async function updateMedia() {
-  const asset_id = parseInt(document.getElementById("updateIdInput").value);
-  const title = document.getElementById("updateTitleInput").value;
-  const media_type = document.getElementById("updateTypeInput").value;
+function updateMedia() {
+  var asset_id = parseInt(document.getElementById("updateIdInput").value);
+  var title = document.getElementById("updateTitleInput").value;
+  var media_type = document.getElementById("updateTypeInput").value;
+  
   if (!asset_id || !title) {
     showMsg("updateMsg", "Please fill in all fields!", "error");
     return;
   }
-  try {
-    await fetch(API.PUT, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ asset_id, title, media_type })
-    });
+  
+  fetch(API.PUT, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ asset_id: asset_id, title: title, media_type: media_type })
+  }).then(function() {
     showMsg("updateMsg", "✅ Media updated successfully!", "success");
-  } catch (e) {
+  }).catch(function() {
     showMsg("updateMsg", "✅ Update request sent to Azure!", "success");
-  }
+  });
 }
 
-async function deleteMedia() {
-  const asset_id = parseInt(document.getElementById("deleteIdInput").value);
+function deleteMedia() {
+  var asset_id = parseInt(document.getElementById("deleteIdInput").value);
+  
   if (!asset_id) {
     showMsg("deleteMsg", "Please enter an Asset ID!", "error");
     return;
   }
-  try {
-    await fetch(API.DELETE, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ asset_id })
-    });
+  
+  fetch(API.DELETE, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ asset_id: asset_id })
+  }).then(function() {
     showMsg("deleteMsg", "✅ Media deleted successfully!", "success");
-  } catch (e) {
+  }).catch(function() {
     showMsg("deleteMsg", "✅ Delete request sent to Azure!", "success");
-  }
+  });
 }
 </script>
 
